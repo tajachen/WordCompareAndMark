@@ -1,0 +1,9 @@
+1.安装pyinstaller。在命令行中输入以下命令：
+pip install pyinstaller
+
+2.使用pyinstaller将你的Python脚本转换为.exe文件。在命令行中，导航到你的Python脚本所在的目录，然后输入以下命令：
+pyinstaller --onefile --noconsole main.py
+（在这里，main.py应该替换为你的Python脚本的文件名。--onefile 参数是将所有内容打包到一个单独的可执行文件中（如果您希望如此），而 --noconsole 参数则会确保程序在Windows系统上运行时不显示控制台窗口。）
+
+3.pyinstaller会在当前目录下创建一个名为dist的文件夹，你的.exe文件将在这个文件夹中。请注意，生成的.exe文件只能在与创建它的系统相同的操作系统上运行。也就是说，如果你在Windows上创建了.exe文件，那么它只能在Windows上运行。
+双击该.exe文件即可直接在Windows环境下运行程序。
