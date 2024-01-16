@@ -79,33 +79,59 @@ def compare_files(file1, file2):
             for para in doc.paragraphs:
                 for run in para.runs:
                     run.font.color.rgb = RGBColor(0, 0, 0)  # 设置字体颜色为黑色
+            for table in doc.tables:
+                for row in table.rows:
+                    for cell in row.cells:
+                        for para in cell.paragraphs:
+                            for run in para.runs:
+                                run.font.color.rgb = RGBColor(0, 0, 0)  # 设置字体颜色为黑色
 
         text1 = " ".join([para.text for para in doc1.paragraphs])
         text2 = " ".join([para.text for para in doc2.paragraphs])
+        # text1 = " ".join(
+        #     [para.text for para in doc1.paragraphs] + [cell.text for table in doc1.tables for row in table.rows for cell
+        #                                                in row.cells])
+        # text2 = " ".join(
+        #     [para.text for para in doc2.paragraphs] + [cell.text for table in doc2.tables for row in table.rows for cell
+        #                                                in row.cells])
 
         time_begin = "查重开始时间：" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # 查找连续10个字符一致的内容
         for i in range(len(text1) - 9):
-            substring = text1[i:i + 10]
-            if substring in text2:
+            substring1 = text1[i:i + 10]
+            if substring1 in text2:
                 # 对一致的内容进行红色字体标记
                 for para in doc1.paragraphs:
                     for run in para.runs:
-                        if substring in run.text:
+                        if substring1 in run.text:
                             run.font.color.rgb = RGBColor(255, 0, 0)  # 设置字体颜色为红色
+                # for table in doc1.tables:
+                #     for row in table.rows:
+                #         for cell in row.cells:
+                #             for para in cell.paragraphs:
+                #                 for run in para.runs:
+                #                     if substring in run.text:
+                #                         run.font.color.rgb = RGBColor(255, 0, 0)  # 设置字体颜色为红色
 
         time_1_end = "文件1查重完毕时间：" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # 查找连续10个字符一致的内容
         for i in range(len(text2) - 9):
-            substring = text2[i:i + 10]
-            if substring in text1:
+            substring2 = text2[i:i + 10]
+            if substring2 in text1:
                 # 对一致的内容进行红色字体标记
                 for para in doc2.paragraphs:
                     for run in para.runs:
-                        if substring in run.text:
+                        if substring2 in run.text:
                             run.font.color.rgb = RGBColor(255, 0, 0)  # 设置字体颜色为红色
+                # for table in doc2.tables:
+                #     for row in table.rows:
+                #         for cell in row.cells:
+                #             for para in cell.paragraphs:
+                #                 for run in para.runs:
+                #                     if substring in run.text:
+                #                         run.font.color.rgb = RGBColor(255, 0, 0)  # 设置字体颜色为红色
 
         time_2_end = "文件2查重完毕时间：" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -129,7 +155,7 @@ if __name__ == '__main__':
     # 创建主窗口
     root = tk.Tk()
     # 设置窗口标题为
-    root.title("Word文档查重并标记_V1.0.1")
+    root.title("Word文档查重并标记_V1.0.2")
     # 设置窗口大小
     root.geometry("600x600")
 
@@ -153,13 +179,17 @@ if __name__ == '__main__':
                         "---------------------------------------------------------------------------\n"
                         "\n"
                         "处理机制：\n"
-                        "1.将[文件1]的每连续10个字符，与[文件2]的全部连续10个字符比较，重复的文本在[文件1]中被设置为红色字体；\n"
-                        "2.反向，将[文件2]的每连续10个字符，与[文件1]的全部连续10个字符比较，重复的文本在[文件2]中被设置为红色字体。\n"
+                        "1.[文件1]的每连续10个字符，是否在[文件2]中出现，[文件1]重复的文本所在段落被设置为红色字体；\n"
+                        "2.反向，[文件2]的每连续10个字符，是否在[文件1]中出现，[文件2]重复的文本所在段落被设置为红色字体。\n"
                         "\n"
                         "---------------------------------------------------------------------------\n"
                         "\n"
                         "版本更新：V1.0.1\n"
-                        "1.根据开发者查重经验进行基础编写，现仅对文本进行查重。\n")
+                        "1.根据开发者查重经验进行基础编写，现仅对文本进行查重。\n"
+                        "版本更新：V1.0.2\n"
+                        "1.强制设置黑色字体也包含了表格内容。\n"
+                        "2.表格内容暂不参与查重，没必要。\n"
+                )
     text.configure(state='disabled')  # 设置为只读
 
     # Frame中创建一个滚动条
