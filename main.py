@@ -97,9 +97,9 @@ def compare_files(file1, file2):
 
         time_begin = "查重开始时间：" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # 查找连续10个字符一致的内容
+        # 查找连续30个字符一致的内容
         for i in range(len(text1) - 9):
-            substring1 = text1[i:i + 10]
+            substring1 = text1[i:i + 30]
             if substring1 in text2:
                 # 对一致的内容进行红色字体标记
                 for para in doc1.paragraphs:
@@ -116,9 +116,9 @@ def compare_files(file1, file2):
 
         time_1_end = "文件1查重完毕时间：" + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # 查找连续10个字符一致的内容
+        # 查找连续30个字符一致的内容
         for i in range(len(text2) - 9):
-            substring2 = text2[i:i + 10]
+            substring2 = text2[i:i + 30]
             if substring2 in text1:
                 # 对一致的内容进行红色字体标记
                 for para in doc2.paragraphs:
@@ -179,8 +179,8 @@ if __name__ == '__main__':
                         "---------------------------------------------------------------------------\n"
                         "\n"
                         "处理机制：\n"
-                        "1.[文件1]的每连续10个字符，是否在[文件2]中出现，[文件1]重复的文本所在段落被设置为红色字体；\n"
-                        "2.反向，[文件2]的每连续10个字符，是否在[文件1]中出现，[文件2]重复的文本所在段落被设置为红色字体。\n"
+                        "1.[文件1]的每连续30个字符，是否在[文件2]中出现，[文件1]重复的文本所在段落被设置为红色字体；\n"
+                        "2.反向，[文件2]的每连续30个字符，是否在[文件1]中出现，[文件2]重复的文本所在段落被设置为红色字体。\n"
                         "\n"
                         "---------------------------------------------------------------------------\n"
                         "\n"
@@ -189,6 +189,8 @@ if __name__ == '__main__':
                         "版本更新：V1.0.2\n"
                         "1.强制设置黑色字体也包含了表格内容。\n"
                         "2.表格内容暂不参与查重，没必要。\n"
+                        "版本更新：V1.0.3\n"
+                        "1.修改为每30个字符匹配。\n"
                 )
     text.configure(state='disabled')  # 设置为只读
 
